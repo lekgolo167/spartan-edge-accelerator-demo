@@ -1,0 +1,10 @@
+*.cache
+*.hw
+*.ip_user_files
+*.sim
+*.xpr
+*.xdc
+*.bit
+*.runs
+*.bin
+.vscode
