@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>ESP Web Server</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/6YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAARAAAAAAAAABEAAAAAAAAAERERAAEREREREREAAREREREAEQABEAAAEQARAAEQAAAREREAARAAABEREQABEAAAAAAAAAEQAAAAAAAAARAAABEREQABEAAAAAAAAAEREREREREAAREREREREQD/PwAA//8AAP8/AAD/PwAA/wMAAIADAACAMwAAnzMAAJ8DAACfAwAAn/8AAJ//AACfAwAAn/8AAIADAACAAwAA">
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    	<!-- Load plotly.js into the DOM -->
+	<script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <h1>ESP WebSocket Server</h1>
+    </div>
+    <div class="content">
+        <div class="card">
+            <h2>Output - GPIO 2</h2>
+            <p class="state">state: <span id="state">%STATE%</span></p>
+            <p><button id="button" class="button">Toggle</button></p>
+            <div id='fft-plot'></div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

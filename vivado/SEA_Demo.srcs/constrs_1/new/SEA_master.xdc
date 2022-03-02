@@ -165,3 +165,7 @@ set_property -dict {PACKAGE_PIN D10 IOSTANDARD LVCMOS33} [get_ports {fpga_io13}]
 set_property -dict {PACKAGE_PIN C14 IOSTANDARD LVCMOS33} [get_ports {version[0]}]
 set_property -dict {PACKAGE_PIN P3  IOSTANDARD LVCMOS33} [get_ports {version[1]}]
 set_property -dict {PACKAGE_PIN P4  IOSTANDARD LVCMOS33} [get_ports {version[2]}]
+
+
+#set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets esp_qspi_clk_IBUF]
+#set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets esp_qspi_cs_IBUF]
