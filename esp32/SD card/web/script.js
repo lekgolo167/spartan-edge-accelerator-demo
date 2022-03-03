@@ -1,5 +1,19 @@
-var x1 = ['L1', 'L2', 'L4', 'L4', 'L5', 'L6', 'L8', 'L9', 'L10', 'L11', 'L12', 'L13', 'L14', 'L15', 'L16'];
-var y1 = [0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0];
+var gram = []
+
+var spectrogram = [
+    {
+        z: gram,
+        type: 'heatmap'
+    }
+];
+
+
+var x1 = ['L1', 'L2', 'L3', 'L4', 'L4', 'L5', 'L6', 'L8', 'L9', 'L10', 'L11', 'L12', 'L13', 'L14', 'L15', 'L16'];
+var y1 = [1,0,0,0,1,0,0,0,5,0,0,0,0,0,0,2];
+for (var i = 0; i < 100; i++) {
+
+    gram.push(y1)
+}
 
 var layout = {
     bargap: 0.05, 
@@ -25,6 +39,28 @@ var trace1 = {
     opacity: 0.5, 
     type: "histogram"
 };
+
+var inverval_timer;
+var data = [trace1];
+
+//Time in milliseconds [1 second = 1000 milliseconds ]    
+inverval_timer = setInterval(function() { 
+    gram.shift()
+    var d = []
+    for (var i = 0; i < 16; i++) {
+        d.push(Math.random()*15)
+    }
+    gram.push(d)
+    trace1.y = d
+    var data = [trace1];
+Plotly.newPlot('spectrogram', spectrogram);
+Plotly.newPlot('fft-plot', data, layout);
+
+}, 500);
+
+Plotly.newPlot('spectrogram', spectrogram);
+
+Plotly.newPlot('fft-plot', data, layout);
 
 var gateway = `ws://${window.location.hostname}/ws`;
 var websocket;
