@@ -1,16 +1,87 @@
-function switchHandler(ch, num) {
-    console.log(num)
-    console.log(ch.checked)
+var gateway = `ws://${window.location.hostname}:5000/ws`;
+//var gateway = `ws://${window.location.hostname}/ws`;
+var websocket = new WebSocket(gateway);
+
+websocket.onopen = function() {
+    console.log('Connection opened');
 }
+
+websocket.onclose = function() {
+    console.log('Connection closed');
+    //setTimeout(initWebSocket, 2000);
+}
+
+var switches = 0xFFFF;
+
+websocket.onmessage = function(event) {
+    console.log(event.data)
+    var json = JSON.parse(event.data);
+
+    json.leds.forEach(function(value, index) {
+        document.getElementById(`led${index+1}-state`).innerHTML = value == 1 ? 'ON' : 'OFF';
+    });
+    // json.rgb.forEach(function(value, index) {
+    //     document.getElementById(`rgb${index}-state`).innerHTML = value > 0 ? 'ON' : 'OFF';
+    // });
+    switches = json.sw;
+    for (var i = 15; i >= 0; i--) {
+        sw = document.getElementById(`sw${i}`);
+        sw.checked = (switches >> i) & 1 != 0 ? true : false;
+    }
+    // plotly
+    trace1.y = json.fft;
+    var data = [trace1];
+    gram.shift();
+    gram.push(json.fft);
+    Plotly.newPlot('fft-plot', data, layout);
+    Plotly.newPlot('spectrogram', spectrogram);
+}
+
+function onLoad(event) {
+    initButton();
+}
+
+window.addEventListener('load', onLoad);
+
+// BUTTONS
+function initButton() {
+    document.getElementById('button1').addEventListener('click', () => { toggle(0) });
+    document.getElementById('button2').addEventListener('click', () => { toggle(1) });
+}
+
+function toggle(led) {
+    var cmd = {
+        command: 'toggle',
+        index: led,
+    };
+    websocket.send(JSON.stringify(cmd));
+}
+
+
+function switchHandler(ch, num) {
+    if (ch.checked) {
+        switches |= (1 << num);
+    } else {
+        switches &= ~(1 << num);
+    }
+    var cmd = {
+        command: 'switches',
+        sw: switches,
+    };
+    websocket.send(JSON.stringify(cmd));
+}
+
 var sws = document.getElementById("switches")
 for (var i = 15; i >= 0; i--) {
     var html = `<label class="switch">
-                <input onclick="switchHandler(this, ${i})" type="checkbox" checked>
+                <input id="sw${i}" onclick="switchHandler(this, ${i})" type="checkbox" checked>
                 <span class="slider"></span>
                 </label>`
     sws.insertAdjacentHTML('afterbegin', html)
 }
 
+
+// GRAPHS
 var gram = []
 
 var spectrogram = [{
@@ -18,14 +89,11 @@ var spectrogram = [{
     type: 'heatmap'
 }];
 
-
-var x1 = ['L1', 'L2', 'L3', 'L4', 'L4', 'L5', 'L6', 'L8', 'L9', 'L10', 'L11', 'L12', 'L13', 'L14', 'L15', 'L16'];
-var y1 = [1, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 2];
+var x1 = ['L1', 'L2', 'L4', 'L4', 'L5', 'L6', 'L8', 'L9', 'L10', 'L11', 'L12', 'L13', 'L14', 'L15', 'L16']
+var y1 = [0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0];
 for (var i = 0; i < 100; i++) {
-
-    gram.push(y1)
+    gram.push(y1);
 }
-
 var layout = {
     bargap: 0.05,
     bargroupgap: 0.2,
@@ -34,7 +102,6 @@ var layout = {
     xaxis: { title: "Value" },
     yaxis: { title: "Count", range: [0, 15] }
 };
-
 var trace1 = {
     x: x1,
     y: y1,
@@ -50,79 +117,3 @@ var trace1 = {
     opacity: 0.5,
     type: "histogram"
 };
-
-var inverval_timer;
-var data = [trace1];
-
-//Time in milliseconds [1 second = 1000 milliseconds ]    
-inverval_timer = setInterval(function() {
-    gram.shift()
-    var d = []
-    for (var i = 0; i < 16; i++) {
-        d.push(Math.random() * 15)
-    }
-    gram.push(d)
-    trace1.y = d
-    var data = [trace1];
-    Plotly.newPlot('spectrogram', spectrogram);
-    Plotly.newPlot('fft-plot', data, layout);
-
-}, 1000);
-
-Plotly.newPlot('spectrogram', spectrogram);
-
-Plotly.newPlot('fft-plot', data, layout);
-
-var gateway = `ws://${window.location.hostname}/ws`;
-var websocket;
-window.addEventListener('load', onLoad);
-
-function initWebSocket() {
-    console.log('Trying to open a WebSocket connection...');
-    websocket = new WebSocket(gateway);
-    websocket.onopen = onOpen;
-    websocket.onclose = onClose;
-    websocket.onmessage = onMessage;
-}
-
-function onOpen(event) {
-    console.log('Connection opened');
-}
-
-function onClose(event) {
-    console.log('Connection closed');
-    //setTimeout(initWebSocket, 2000);
-}
-
-function onMessage(event) {
-    var state;
-    console.log(event.data)
-    var json = JSON.parse(event.data);
-    if (json.ledState == "1") {
-        state = "ON";
-        document.getElementById('state').innerHTML = state;
-    } else if (json.ledState == "0") {
-        state = "OFF";
-        document.getElementById('state').innerHTML = state;
-    }
-
-    // plotly
-    trace1.y = [json.x0, json.x1, json.x2, json.x3, json.x4, json.x5, json.x6, json.x7, json.x8, json.x9, json.x10, json.x11, json.x12, json.x13, json.x14, json.x15]
-    var data = [trace1];
-
-    Plotly.newPlot('fft-plot', data, layout);
-}
-
-function onLoad(event) {
-    initWebSocket();
-    initButton();
-}
-
-function initButton() {
-    document.getElementById('button').addEventListener('click', toggle);
-}
-
-function toggle() {
-    console.log("button pressed")
-    websocket.send('toggle');
-}

@@ -16,12 +16,24 @@
     </div>
     <div class="content">
         <div class="card">
-            <h2>Output - GPIO 2</h2>
-            <p class="state">state: <span id="state">%STATE%</span></p>
-            <p><button id="button" class="button">Toggle</button></p>
+            <h2>FFT SEA Demo</h2>
+            <p>
+                <div class="row">
+                    <div class="column">
+                        <button id="button1" class="button">Toggle1</button>
+                        <p class="state">LED-1: <span id="led1-state">--</span></p>
+                    </div>
+                    <div class="column">
+                        <button id="button2" class="button">Toggle2</button>
+                        <p class="state">LED-2: <span id="led2-state">--</span></p>
+                    </div>
+                </div>
+            </p>
+        </div>
+        <div></div>
+        <div class="card">
             <div id='fft-plot'></div>
-            <div id="switches">
-            </div>
+            <div id="switches"></div>
             <div id='spectrogram'></div>
         </div>
     </div>
