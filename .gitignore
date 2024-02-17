@@ -3,8 +3,11 @@
 *.ip_user_files
 *.sim
 *.xpr
-
+*.jou
+*.log
+*.str
 *.bit
 *.runs
 *.bin
 .vscode
+.Xil*
