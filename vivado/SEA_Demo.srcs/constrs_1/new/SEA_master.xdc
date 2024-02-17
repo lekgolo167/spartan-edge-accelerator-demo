@@ -114,23 +114,23 @@ set_property -dict {PACKAGE_PIN J4  IOSTANDARD LVCMOS33} [get_ports {adc_oe_n}]
 set_property -dict {PACKAGE_PIN C5  IOSTANDARD LVCMOS33} [get_ports {adc_clk}]
 
 # ADC1173_DATA
-set_property -dict {PACKAGE_PIN J3  IOSTANDARD LVCMOS33} [get_ports {adc_data[0]}]
-set_property -dict {PACKAGE_PIN J2  IOSTANDARD LVCMOS33} [get_ports {adc_data[1]}]
-set_property -dict {PACKAGE_PIN D12 IOSTANDARD LVCMOS33} [get_ports {adc_data[2]}]
-set_property -dict {PACKAGE_PIN E12 IOSTANDARD LVCMOS33} [get_ports {adc_data[3]}]
-set_property -dict {PACKAGE_PIN F12 IOSTANDARD LVCMOS33} [get_ports {adc_data[4]}]
-set_property -dict {PACKAGE_PIN C11 IOSTANDARD LVCMOS33} [get_ports {adc_data[5]}]
-set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS33} [get_ports {adc_data[6]}]
-set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVCMOS33} [get_ports {adc_data[7]}]
+set_property -dict {PACKAGE_PIN J3  IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[0]}]
+set_property -dict {PACKAGE_PIN J2  IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[1]}]
+set_property -dict {PACKAGE_PIN D12 IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[2]}]
+set_property -dict {PACKAGE_PIN E12 IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[3]}]
+set_property -dict {PACKAGE_PIN F12 IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[4]}]
+set_property -dict {PACKAGE_PIN C11 IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[5]}]
+set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[6]}]
+set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVCMOS33} [get_ports {adc_raw_data[7]}]
 
 # DAC7311 CLK
-set_property -dict {PACKAGE_PIN M1  IOSTANDARD LVCMOS33} [get_ports {dac_clk}]
+set_property -dict {PACKAGE_PIN M1  IOSTANDARD LVCMOS33} [get_ports {dac_serial_clk}]
 
 # DAC7311 SYNC
 set_property -dict {PACKAGE_PIN N1  IOSTANDARD LVCMOS33} [get_ports {dac_sync}]
 
 # DAC7311 DATA
-set_property -dict {PACKAGE_PIN L1  IOSTANDARD LVCMOS33} [get_ports {dac_data}]
+set_property -dict {PACKAGE_PIN L1  IOSTANDARD LVCMOS33} [get_ports {dac_serial_data}]
 
 # HDMI TX
 set_property -dict {PACKAGE_PIN D4  IOSTANDARD TMDS_33}  [get_ports {hdmi_hpd_det}]
