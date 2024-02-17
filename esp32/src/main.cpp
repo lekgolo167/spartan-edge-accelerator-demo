@@ -140,6 +140,9 @@ void setup(){
 
   // initialization 
   esp32Cla.begin();
+  esp32Cla.xfpgaGPIOInit();
+  esp32Cla.xlibsSstream("/overlay/top.bit");
+
     // check the .ini file exist or not
   const char *filename = "/board_config.ini";
   IniFile ini(filename);
